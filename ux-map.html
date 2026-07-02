@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maygrove 用户体验地图 · Sarah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #FDFBF7;
+      color: #1A1A1A;
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 42px; margin: 0 0 12px; }
+    h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin: 48px 0 24px; color: #6E7D65; }
+    .subtitle { color: #6E6E6E; font-size: 18px; }
+    .persona-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 32px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .persona-avatar {
+      width: 120px; height: 120px; border-radius: 60px;
+      background: #E8ECE3; display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .persona-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .meta-item { font-size: 14px; color: #6E6E6E; }
+    .meta-item strong { display: block; color: #1A1A1A; font-size: 16px; margin-top: 4px; }
+    .mermaid { background: #fff; border-radius: 24px; padding: 24px; margin: 24px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin: 24px 0; }
+    th { background: #6E7D65; color: #fff; padding: 16px; text-align: left; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { padding: 16px; border-bottom: 1px solid #F4F2EE; vertical-align: top; font-size: 14px; }
+    tr:last-child td { border-bottom: none; }
+    .emotion { font-size: 24px; }
+    .pain { color: #C45B4A; }
+    .opportunity { color: #6E7D65; }
+    .touchpoint { color: #B8735F; }
+    .stage-title { font-weight: 700; color: #1A1A1A; font-size: 16px; margin-bottom: 4px; }
+    .stage-sub { color: #6E6E6E; font-size: 12px; }
+    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+    .insight-card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .insight-card h3 { margin: 0 0 12px; font-size: 18px; color: #6E7D65; }
+    .insight-card ul { margin: 0; padding-left: 18px; }
+    .insight-card li { margin-bottom: 8px; font-size: 14px; color: #4A4A4A; }
+    .highlight-box { background: #F3E6E0; border-radius: 18px; padding: 24px; margin: 24px 0; border-left: 4px solid #B8735F; }
+    .highlight-box h3 { margin: 0 0 8px; color: #B8735F; }
+    .footer { text-align: center; color: #6E6E6E; margin-top: 64px; font-size: 14px; }
+    @media (max-width: 768px) {
+      .persona-card { grid-template-columns: 1fr; text-align: center; }
+      .persona-meta { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+      td { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+      <div>
+        <h1>Maygrove 用户体验地图</h1>
+        <div class="subtitle">以核心用户 Sarah 为主线，覆盖从认知到推荐的完整旅程</div>
+      </div>
+      <div style="background: #6E7D65; color: #fff; padding: 12px 20px; border-radius: 999px; font-weight: 700; font-size: 14px;">
+        US Market · $700 Device · $2 Member Pods
+      </div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-avatar">👩🏻</div>
+      <div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 8px;">Sarah Miller</div>
+        <div style="color: #6E6E6E; font-size: 16px; margin-bottom: 16px;">
+          34 岁，纽约 Marketing Manager，独居，关注 wellness 与家居美学，Instagram 活跃用户，愿意为好设计付费。
+        </div>
+        <div class="persona-meta">
+          <div class="meta-item">Goals <strong>30 天内收获第一盆生菜</strong></div>
+          <div class="meta-item">Pain <strong>养死过绿植，怕麻烦</strong></div>
+          <div class="meta-item">Trigger <strong>Instagram 看到博主晒厨房种植机</strong></div>
+          <div class="meta-item">Budget <strong>$700 可接受，但要 justify</strong></div>
+          <div class="meta-item">Channel <strong>Instagram / 官网 / 朋友推荐</strong></div>
+          <div class="meta-item">Value <strong>健康、美学、成就感</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <h2>1. 情感旅程曲线</h2>
+    <div class="mermaid">
+      %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#6E7D65', 'primaryTextColor': '#1A1A1A', 'primaryBorderColor': '#6E7D65', 'lineColor': '#B8735F', 'secondaryColor': '#F3E6E0', 'tertiaryColor': '#F4F2EE' }}}%%
+      journey
+        title Sarah 的 Maygrove 购买与使用旅程
+        section 认知
+          看到内容: 5: Sarah
+        section 考虑
+          访问官网: 4: Sarah
+          看价格: 3: Sarah
+          看评价: 4: Sarah
+        section 购买
+          下单: 6: Sarah
+          等待收货: 4: Sarah
+        section 开箱
+          拆箱: 5: Sarah
+          App 配网: 2: Sarah
+          完成设置: 6: Sarah
+        section 首次种植
+          选择品种: 5: Sarah
+          跟着教程: 6: Sarah
+        section 日常使用
+          查看状态: 7: Sarah
+          收到提醒: 5: Sarah
+        section 求助
+          发现黄叶: 3: Sarah
+          AI 诊断: 6: Sarah
+        section 收获
+          首次收获: 9: Sarah
+          分享: 8: Sarah
+        section 复购
+          订阅种子: 7: Sarah
+    </div>
+
+    <h2>2. 详细阶段地图</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 12%;">阶段</th>
+          <th style="width: 18%;">场景 / 触点</th>
+          <th style="width: 20%;">用户行为</th>
+          <th style="width: 15%;">想法 / 情绪</th>
+          <th style="width: 17%;">痛点</th>
+          <th style="width: 18%;">机会点</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="stage-title">1. 认知</div>
+            <div class="stage-sub">Instagram 刷到</div>
+          </td>
+          <td>
+            <span class="touchpoint">Instagram / TikTok</span><br>
+            家居 / wellness 博主内容
+          </td>
+          <td>刷短视频，看到高颜值厨房种植机，停留 3-5 秒</td>
+          <td><span class="emotion">🤔</span> 好奇 / 怀疑<br>"在家种菜？不用土？真的假的？"</td>
+          <td class="pain">信息碎片化，不知道和普通花盆的区别</td>
+          <td class="opportunity">用 15 秒短视频讲清「无土、30 天收获」核心卖点</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">2. 考虑</div>
+            <div class="stage-sub">官网 + 比价</div>
+          </td>
+          <td>
+            <span class="touchpoint">官网 / Amazon</span><br>
+            Goop / Well+Good 推荐
+          </td>
+          <td>搜索产品，看测评，对比价格、功能、耗材成本</td>
+          <td><span class="emotion">😬</span> 犹豫<br>"$700 不便宜，后续种子多少钱？"</td>
+          <td class="pain">总拥有成本不清晰，怕后续被耗材绑架</td>
+          <td class="opportunity">详情页增加「首年养护成本计算器」+ 60 天退货承诺</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">3. 购买</div>
+            <div class="stage-sub">官网下单</div>
+          </td>
+          <td>
+            <span class="touchpoint">官网</span><br>
+            信用卡 / Apple Pay
+          </td>
+          <td>选择颜色，下单，期待收货</td>
+          <td><span class="emotion">😊</span> 期待<br>"希望别让我组装半天"</td>
+          <td class="pain">物流等待期没有互动，期待感下降</td>
+          <td class="opportunity">发货后推送「你的小菜园正在路上」系列内容</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">4. 开箱</div>
+            <div class="stage-sub">拆箱 + App 设置</div>
+          </td>
+          <td>
+            <span class="touchpoint">包装盒</span><br>
+            App / Wi-Fi
+          </td>
+          <td>拆箱，扫码，下载 App，连接 Wi-Fi，命名设备</td>
+          <td><span class="emotion">😰</span> 焦虑<br>"又要下载 App？又要注册？"</td>
+          <td class="pain">注册流程长、配网失败率高</td>
+          <td class="opportunity">5 步内完成播种，配网失败给出具体错误提示</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">5. 首次种植</div>
+            <div class="stage-sub">选种 + 教程</div>
+          </td>
+          <td>
+            <span class="touchpoint">App</span><br>
+            种子 pod
+          </td>
+          <td>根据 AI 推荐选择品种，跟着视频教程加水、放 pod</td>
+          <td><span class="emotion">😌</span> 安心<br>"原来这么简单"</td>
+          <td class="pain">不知道营养液加多少、种子放几颗</td>
+          <td class="opportunity">每步配短视频，关键操作动画演示</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">6. 日常使用</div>
+            <div class="stage-sub">查看状态</div>
+          </td>
+          <td>
+            <span class="touchpoint">App Home</span><br>
+            推送通知
+          </td>
+          <td>每天打开 App 看状态，收到水/光/温度提醒</td>
+          <td><span class="emotion">😊</span> 轻松<br>"今天植物怎么样？"</td>
+          <td class="pain">信息过载，不知道重点看什么</td>
+          <td class="opportunity">首页只展示「今日待办」和异常提醒</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">7. 求助</div>
+            <div class="stage-sub">AI 诊断</div>
+          </td>
+          <td>
+            <span class="touchpoint">AI Ask</span><br>
+            社区
+          </td>
+          <td>发现叶子发黄，拍照问 AI，获得建议</td>
+          <td><span class="emotion">😟</span> 焦虑<br>"它怎么了？我会不会把它养死？"</td>
+          <td class="pain">AI 诊断不准，社区回复慢</td>
+          <td class="opportunity">诊断结果结合设备数据，紧急问题转人工</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">8. 收获</div>
+            <div class="stage-sub">第一次收获</div>
+          </td>
+          <td>
+            <span class="touchpoint">App</span><br>
+            Instagram
+          </td>
+          <td>摘下第一片生菜，拍照，生成分享卡片</td>
+          <td><span class="emotion">🥰</span> 惊喜<br>"我居然种出来了！"</td>
+          <td class="pain">缺少分享引导和记录保存</td>
+          <td class="opportunity">一键生成 Instagram Story 分享卡片</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">9. 复购</div>
+            <div class="stage-sub">订阅种子</div>
+          </td>
+          <td>
+            <span class="touchpoint">Seed Shop</span><br>
+            会员中心
+          </td>
+          <td>浏览下一批种子，订阅会员，自动续订</td>
+          <td><span class="emotion">😐</span> 权衡<br>"会员值不值？"</td>
+          <td class="pain">会员权益感知弱，忘记取消订阅</td>
+          <td class="opportunity">每月推送「已节省 $X」报告，随时可暂停</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="stage-title">10. 推荐</div>
+            <div class="stage-sub">社交分享</div>
+          </td>
+          <td>
+            <span class="touchpoint">Instagram</span><br>
+            朋友圈 / 社区
+          </td>
+          <td>分享种植成果，推荐朋友购买</td>
+          <td><span class="emotion">😎</span> 自豪<br>"想让别人也知道这个好东西"</td>
+          <td class="pain">推荐没有激励，素材不够好看</td>
+          <td class="opportunity">精美收获海报 + 邀请好友得种子券</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. 关键时刻与关键指标</h2>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h3>🎯 Aha Moment</h3>
+        <ul>
+          <li>在 App 里看到实时生长数据和倒计时</li>
+          <li>感知「我能掌控种植过程」</li>
+          <li>发生在开箱后 24-48 小时内</li>
+        </ul>
+      </div>
+      <div class="insight-card">
+        <h3>⚠️ 最大流失点</h3>
+        <ul>
+          <li>开箱 30 分钟内无法完成配网</li>
+          <li>首次种植 7 天内植物异常且求助无门</li>
+          <li>这两个时刻决定 30 天退货率</li>
+        </ul>
+      </div>
+      <div class="insight-card">
+        <h3>💰 转化杠杆</h3>
+        <ul>
+          <li>60 天无理由退货降低 $700 决策风险</li>
+          <li>首月会员低价试用</li>
+          <li>Instagram-ready 分享模板降低获客成本</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h3>核心洞察</h3>
+      <p>Sarah 的旅程不是「买设备」而是「购买一种更健康、更美好的生活方式」。$700 的定价需要由「非功能性价值」支撑：家居美学、健康符号、社交货币。产品必须在 30 天内让她完成第一次收获，否则退货风险极高。</p>
+    </div>
+
+    <h2>4. 设计机会优先级</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>优先级</th>
+          <th>机会点</th>
+          <th>对应阶段</th>
+          <th>预期影响</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: #C45B4A;">P0</strong></td>
+          <td>极简 onboarding：5 步内完成播种</td>
+          <td>开箱 / 首次种植</td>
+          <td>降低流失率，提升激活</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #C45B4A;">P0</strong></td>
+          <td>配网失败具体提示 + 一键重试</td>
+          <td>开箱</td>
+          <td>减少退货和客服工单</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #D4A03D;">P1</strong></td>
+          <td>Instagram Story 一键分享</td>
+          <td>收获 / 推荐</td>
+          <td>降低获客成本</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #D4A03D;">P1</strong></td>
+          <td>AI 诊断结合设备数据</td>
+          <td>求助</td>
+          <td>提升用户信任和留存</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #6E7D65;">P2</strong></td>
+          <td>会员「已节省」量化报告</td>
+          <td>复购</td>
+          <td>提升续订率</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      Maygrove User Experience Map · Generated for US market design review
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+      primaryColor: '#E8ECE3',
+      primaryTextColor: '#1A1A1A',
+      primaryBorderColor: '#6E7D65',
+      lineColor: '#B8735F',
+      secondaryColor: '#F3E6E0',
+      tertiaryColor: '#F4F2EE',
+      fontFamily: 'DM Sans'
+    }});
+  </script>
+</body>
+</html>
