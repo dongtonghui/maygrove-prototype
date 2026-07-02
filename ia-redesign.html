@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maygrove 信息架构重设计方案</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #FDFBF7; color: #1A1A1A; font-family: 'DM Sans', -apple-system, sans-serif; line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 40px; margin: 0 0 12px; }
+    h2 { font-family: 'Playfair Display', serif; font-size: 28px; color: #6E7D65; margin: 48px 0 20px; border-bottom: 2px solid #E8ECE3; padding-bottom: 12px; }
+    h3 { font-size: 20px; color: #B8735F; margin: 32px 0 12px; }
+    .subtitle { color: #6E6E6E; font-size: 18px; margin-bottom: 32px; }
+    .section { background: #fff; border-radius: 24px; padding: 32px; margin-bottom: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .card { background: #FDFBF7; border-radius: 16px; padding: 20px; border: 1px solid #E8ECE3; }
+    .card h4 { margin: 0 0 8px; color: #6E7D65; font-size: 16px; }
+    ul { margin: 8px 0; padding-left: 20px; }
+    li { margin-bottom: 8px; }
+    .principle { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .principle-num { width: 36px; height: 36px; border-radius: 18px; background: #6E7D65; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .nav-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .nav-table th { background: #6E7D65; color: #fff; padding: 14px; text-align: left; font-size: 14px; }
+    .nav-table td { padding: 14px; border-bottom: 1px solid #E8ECE3; font-size: 14px; }
+    .nav-table tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; margin-right: 6px; }
+    .badge-p0 { background: #F3E6E0; color: #B8735F; }
+    .badge-p1 { background: #E8ECE3; color: #6E7D65; }
+    .badge-p2 { background: #F4F2EE; color: #6E6E6E; }
+    .ia-tree { font-family: 'DM Sans', monospace; font-size: 14px; line-height: 1.8; background: #FDFBF7; padding: 24px; border-radius: 16px; border: 1px solid #E8ECE3; }
+    .ia-tree .branch { margin-left: 24px; color: #6E6E6E; }
+    .ia-tree .leaf { margin-left: 48px; color: #1A1A1A; }
+    .highlight { background: #F3E6E0; border-left: 4px solid #B8735F; padding: 20px; border-radius: 0 16px 16px 0; margin: 24px 0; }
+    .flow-step { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .flow-step span { background: #6E7D65; color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+    .footer { text-align: center; color: #6E6E6E; margin-top: 64px; font-size: 14px; }
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+      <div>
+        <h1>Maygrove 信息架构重设计</h1>
+        <div class="subtitle">从「功能堆砌」到「以任务为中心」的导航系统</div>
+      </div>
+      <div style="background: #6E7D65; color: #fff; padding: 12px 20px; border-radius: 999px; font-weight: 700; font-size: 14px;">
+        IA Redesign Framework
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>一、为什么需要重设计 IA</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h4>当前问题</h4>
+          <ul>
+            <li><strong>功能堆砌：</strong> 种植控制、AI、电商、社区、会员各成一模块</li>
+            <li><strong>导航层级深：</strong> 用户要多次点击才能到达常用任务</li>
+            <li><strong>标签混乱：</strong> 同一功能在不同入口名称不同</li>
+            <li><strong>主次不清：</strong> 核心任务（看植物状态）被淹没</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>设计目标</h4>
+          <ul>
+            <li><strong>任务导向：</strong> 按用户想做什么分组，而非按功能分组</li>
+            <li><strong>3 次点击原则：</strong> 核心任务 3 步内可达</li>
+            <li><strong>一致性：</strong> 标签和结构全局统一</li>
+            <li><strong>可扩展：</strong> 支持未来增加设备、社区、订阅业务</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>二、信息架构重设计 5 步法</h2>
+      <div class="principle">
+        <div class="principle-num">1</div>
+        <div>
+          <strong>内容清单审计</strong><br>
+          列出当前 App 所有页面、功能、内容资产。识别重复、废弃、遗漏。
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">2</div>
+        <div>
+          <strong>用户任务建模</strong><br>
+          基于 JTBD 定义核心任务：「我想在 30 天内收获第一份生菜」「我想知道植物今天是否需要我做什么」。
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">3</div>
+        <div>
+          <strong>卡片分类 + 树状测试</strong><br>
+          让用户把功能分组；验证新导航下用户能否找到目标页面。
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">4</div>
+        <div>
+          <strong>定义层级与标签</strong><br>
+          确定主导航、次级导航、页面标题、按钮文案。标签要符合用户语言，而非内部术语。
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">5</div>
+        <div>
+          <strong>原型验证</strong><br>
+          用可点击原型做任务测试：找状态、买东西、问 AI、看会员权益。记录失败率并迭代。
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>三、Maygrove 推荐 IA 结构</h2>
+      <h3>3.1 主导航（Bottom Tab）</h3>
+      <p>建议保留 5 个入口，符合拇指操作区和心智模型：</p>
+      <table class="nav-table">
+        <thead>
+          <tr>
+            <th>Tab</th>
+            <th>命名理由</th>
+            <th>承载任务</th>
+            <th>优先级</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Home</strong> 🌿</td>
+            <td>最符合"查看我的花园"心智</td>
+            <td>设备状态、今日任务、生长进度、快捷控制</td>
+            <td><span class="badge badge-p0">P0</span></td>
+          </tr>
+          <tr>
+            <td><strong>Grow</strong> ✨</td>
+            <td>从"Ask AI"升级为"种植过程"</td>
+            <td>AI 问答、种植指南、生长时间线、相册</td>
+            <td><span class="badge badge-p0">P0</span></td>
+          </tr>
+          <tr>
+            <td><strong>Shop</strong> 🛒</td>
+            <td>直接、无歧义</td>
+            <td>种子 Pod、配件、耗材、订阅管理</td>
+            <td><span class="badge badge-p1">P1</span></td>
+          </tr>
+          <tr>
+            <td><strong>Discover</strong> 👀</td>
+            <td>社区/食谱/灵感统一在此，避免"Community"冷清感</td>
+            <td>Feed、话题、食谱、专家内容、活动</td>
+            <td><span class="badge badge-p1">P1</span></td>
+          </tr>
+          <tr>
+            <td><strong>Profile</strong> 👤</td>
+            <td>个人中心通用入口</td>
+            <td>会员、订单、家庭共享、设置、帮助</td>
+            <td><span class="badge badge-p1">P1</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 信息层级树</h3>
+      <div class="ia-tree">
+        🌿 <strong>Home</strong>
+        <div class="branch">├─ Dashboard（设备状态、今日任务）</div>
+        <div class="branch">├─ Device Control（手动控制/计划）</div>
+        <div class="branch">├─ Alerts（通知、异常）</div>
+        <div class="branch">└─ Quick Actions（加购物车、问 AI）</div>
+
+        ✨ <strong>Grow</strong>
+        <div class="branch">├─ AI Assistant（问答、诊断、建议）</div>
+        <div class="branch">├─ Plant Guide（品种、步骤、视频）</div>
+        <div class="branch">├─ Timeline（生长记录、预测收获）</div>
+        <div class="branch">└─ Harvest（收获、庆祝、记录）</div>
+
+        🛒 <strong>Shop</strong>
+        <div class="branch">├─ Seed Pods（按类别/难度/季节）</div>
+        <div class="branch">├─ Accessories（营养液、替换件）</div>
+        <div class="branch">├─ Subscription（会员计划、自动配送）</div>
+        <div class="branch">└─ Orders & Cart</div>
+
+        👀 <strong>Discover</strong>
+        <div class="branch">├─ Feed（推荐/关注）</div>
+        <div class="branch">├─ Recipes（用收获食材做菜）</div>
+        <div class="branch">├─ Topics（新手、装饰、亲子）</div>
+        <div class="branch">└─ Expert Classes（会员专属）</div>
+
+        👤 <strong>Profile</strong>
+        <div class="branch">├─ Membership（权益、节省、续订）</div>
+        <div class="branch">├─ My Gardens（设备、历史）</div>
+        <div class="branch">├─ Orders & Rewards</div>
+        <div class="branch">├─ Family Sharing</div>
+        <div class="branch">└─ Settings & Help</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>四、关键设计决策</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h4>决策 1：把 Community 改为 Discover</h4>
+          <p>"Community" 暗示必须社交，但用户更想获取灵感、食谱和教程。Discover 包含社区内容，但不依赖社交活跃度。</p>
+        </div>
+        <div class="card">
+          <h4>决策 2：AI 不单独成 Tab，而是放入 Grow</h4>
+          <p>AI 是种植过程的工具，不是独立功能。把它放在 Grow 中，强化"AI 帮你种好"的认知。</p>
+        </div>
+        <div class="card">
+          <h4>决策 3：Home 只做「查看」和「今日行动」</h4>
+          <p>Home 不是仪表盘大全。它只回答：今天植物怎么样？需要我做什么？最近有什么异常？</p>
+        </div>
+        <div class="card">
+          <h4>决策 4：Profile 承载所有低频功能</h4>
+          <p>会员、订单、家庭共享、设置、帮助都属于"我的"，统一放在 Profile 中，减少主导航复杂度。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>五、关键路径示例</h2>
+      <h3>5.1 新用户：从下载到第一次种植</h3>
+      <div class="flow-step">
+        <span>Splash</span> → <span>Onboarding</span> → <span>Signup</span> → <span>Wi-Fi 配对</span> → <span>选择品种</span> → <span>种植教程</span> → <span>Home</span>
+      </div>
+      <p><strong>IA 原则：</strong>  onboarding 是独立流程，不进入主 Tab 结构。完成后才进入 Home。</p>
+
+      <h3>5.2 日常任务：查看植物今天是否需要照料</h3>
+      <div class="flow-step">
+        <span>Home</span> → <span>Today Tasks</span> → <span>快捷完成</span>
+      </div>
+      <p><strong>IA 原则：</strong> 核心任务 ≤ 2 步。</p>
+
+      <h3>5.3 购买种子：浏览到下单</h3>
+      <div class="flow-step">
+        <span>Shop</span> → <span>Category</span> → <span>Product</span> → <span>Cart</span> → <span>Checkout</span>
+      </div>
+      <p><strong>IA 原则：</strong> 电商路径独立，不与其他模块交叉。</p>
+    </div>
+
+    <div class="highlight">
+      <h3 style="margin-top: 0; color: #B8735F;">核心洞察</h3>
+      <p>Maygrove 的 IA 不是把 5 个功能模块平铺，而是围绕用户「观察 → 学习 → 行动 → 购买 → 分享」的循环来组织。Home 是观察，Grow 是学习，Shop 是购买，Discover 是分享与灵感，Profile 是个人管理。</p>
+    </div>
+
+    <div class="section">
+      <h2>六、落地建议</h2>
+      <ul>
+        <li><strong>Week 1：</strong> 完成内容清单审计，列出所有页面和功能</li>
+        <li><strong>Week 2：</strong> 邀请 5-8 位目标用户做开放式卡片分类</li>
+        <li><strong>Week 3：</strong> 输出新 IA 树和标签系统，内部评审</li>
+        <li><strong>Week 4：</strong> 用原型做树状测试（Tree Testing），验证任务完成率</li>
+        <li><strong>Week 5：</strong> 根据反馈调整，输出最终 IA 文档</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      Maygrove Information Architecture Redesign · Generated for product design review
+    </div>
+  </div>
+</body>
+</html>
